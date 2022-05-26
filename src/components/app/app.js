@@ -2,10 +2,12 @@ import React, { Fragment } from 'react'
 
 import Header from "../header";
 import Nav from "../nav";
-import Converter from "../converter/";
+import Converter from "../converter";
 import Footer from "../footer";
+import ExchangeChart from "../exchange-chart";
 
 import './app.sass'
+
 
 const App = () => {
   return (
@@ -17,6 +19,16 @@ const App = () => {
           <main className="main">
             <div className="row">
               <Converter title="Конвертер криптовалюты" />
+
+              <ExchangeChart
+                title="График изменения курса Bitcoin"
+                coinID="bitcoin"
+              />
+
+              <ExchangeChart
+                title="График изменения курса Ethereum"
+                coinID="ethereum"
+              />
             </div>
           </main>
         </div>
