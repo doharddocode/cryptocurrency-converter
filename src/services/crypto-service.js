@@ -45,6 +45,12 @@ export default class CryptoService {
       })
     }
 
+    data.set('usd', {
+      id: 'usd',
+      symbol: 'USA',
+      label: 'USD',
+      price: 1,
+    });
     return data;
   }
 

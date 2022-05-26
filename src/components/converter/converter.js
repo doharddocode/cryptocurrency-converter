@@ -28,7 +28,7 @@ const CoinSelection = ({ data, dataTarget, onChange }) => {
 class Converter extends Component {
   constructor(props) {
     super(props);
-    this.cryptoService = new CryptoService('bitcoin', 'ethereum', 'usd');
+    this.cryptoService = new CryptoService('bitcoin', 'ethereum');
     this.fetchNewData();
   }
 
@@ -66,7 +66,7 @@ class Converter extends Component {
           coinTo: this._setupCoinData(data.get('bitcoin')),
           convertedResult: this.convert(1, 1),
           loading: false
-        });
+        }, () => { console.log(this.state.data) });
       })
       .catch((err) => {
         console.log('Error:', err);
@@ -134,6 +134,7 @@ class Converter extends Component {
 
     if (!formData) return <LoadingIndicator />;
 
+    console.log('formData', formData);
     return (
       <div className="crypto-converter">
         <h2 className="crypto-converter__title">{ title }</h2>
@@ -181,7 +182,7 @@ class Converter extends Component {
                 <div className="del">=</div>
 
                 <div className="result-text">
-                  <strong>{ formData.convertedResult }</strong> { formData.coinTo.label } ({ formData.coinFrom.symbol })
+                  <strong>{ formData.convertedResult }</strong> { formData.coinTo.label } ({ formData.coinTo.symbol })
                 </div>
               </div>
             </div>
