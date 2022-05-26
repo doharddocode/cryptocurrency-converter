@@ -13,6 +13,18 @@ export default class CryptoService {
     return Object.entries(obj).map(([key, val]) => `${key}=${val}`).join('&');
   }
 
+  _getResources = async (apiPath, params) => {
+    const apiUrl = `${this._apiBase}${apiPath}?${this._transformObjToUrl(params)}`;
+    const data = await fetch(apiUrl);
+
+    if (!data.ok) {
+      throw new Error(`Could not fetch ${apiUrl}` +
+        `, received ${data.status}`)
+    }
+
+    return data.json();
+  }
+
   _getCoinsData = async () => {
     const params = {
       vs_currency: 'usd',
@@ -22,15 +34,8 @@ export default class CryptoService {
       page: 1,
       sparkline: false
     };
-    const apiUrl = `${this._apiBase}coins/markets?${this._transformObjToUrl(params)}`;
-    const data = await fetch(apiUrl);
 
-    if (!data.ok) {
-      throw new Error(`Could not fetch ${apiUrl}` +
-        `, received ${data.status}`)
-    }
-
-    return data.json();
+    return this._getResources('coins/markets', params)
   }
 
   _coinsDataTransform = (coins) => {
@@ -66,15 +71,8 @@ export default class CryptoService {
       days: 14,
       interval: 'daily',
     };
-    const apiUrl = `${this._apiBase}coins/${coinId}/market_chart?${this._transformObjToUrl(params)}`;
-    const data = await fetch(apiUrl);
 
-    if (!data.ok) {
-      throw new Error(`Could not fetch ${apiUrl}` +
-        `, received ${data.status}`)
-    }
-
-    return data.json();
+    return this._getResources(`/coins/${coinId}/market_chart`, params);
   }
 
   _marketsDataTransform = (data) => {

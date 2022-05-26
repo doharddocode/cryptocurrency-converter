@@ -66,7 +66,7 @@ class Converter extends Component {
           coinTo: this._setupCoinData(data.get('bitcoin')),
           convertedResult: this.convert(1, 1),
           loading: false
-        }, () => { console.log(this.state.data) });
+        });
       })
       .catch((err) => {
         console.log('Error:', err);
@@ -134,7 +134,6 @@ class Converter extends Component {
 
     if (!formData) return <LoadingIndicator />;
 
-    console.log('formData', formData);
     return (
       <div className="crypto-converter">
         <h2 className="crypto-converter__title">{ title }</h2>
