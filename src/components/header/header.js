@@ -1,31 +1,27 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 
 import Logo from "../logo";
+import Nav from "../nav";
 
 import './header.sass'
 
-const Header = ({ onOpenMenu }) => {
+const Header = () => {
   return (
     <header className="header row align-items-center">
-      <div className="col-md-9">
-        <Logo />
-      </div>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="container-fluid">
 
-      <div className="col-md-3">
-        {/*<button type="button" className="header__open-menu-btn btn btn-primary"*/}
-        {/*        data-bs-toggle="offcanvas"*/}
-        {/*        data-bs-target="#offcanvasMenu"*/}
-        {/*        aria-controls="offcanvasMenu">Открыть меню*/}
-        {/*</button>*/}
-        <Button
-          variant="primary"
-          className="header__open-menu-btn btn btn-primary"
-          onClick={ onOpenMenu }
-        >
-          Открыть меню
-        </Button>
-      </div>
+          <Logo />
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                  aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <Nav />
+          </div>
+        </div>
+      </nav>
     </header>
   );
 }
