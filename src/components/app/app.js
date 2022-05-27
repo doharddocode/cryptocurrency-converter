@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom'
 
 import Header from "../header";
-import Nav from "../nav";
 import Footer from "../footer";
 import {
   MainPage,
@@ -30,7 +29,6 @@ const App = () => {
             element={<PortfolioPage />}
           />
         </Routes>
-        <Nav />
       </div>
       <Footer />
     </div>

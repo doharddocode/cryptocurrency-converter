@@ -45,7 +45,7 @@ const PortfolioTable = () => {
     <div className="crypto-portfolio">
       <h2 className="crypto-portfolio__title">Портфель</h2>
 
-      <div className="crypto-portfolio__content">
+      <div className="crypto-portfolio__content table-responsive-lg">
         { content }
         <div className="alert alert-secondary" role="alert">
           Итоговая оценка портфеля в USD: <strong>{ coinsTotalPrice }$</strong>

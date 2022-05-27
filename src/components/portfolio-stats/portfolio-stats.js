@@ -30,10 +30,10 @@ const PieChart = () => {
       },
       labels: getPieLabels(coins),
       responsive: [{
-        breakpoint: 480,
+        breakpoint: 520,
         options: {
           chart: {
-            width: 200
+            width: 350
           },
           legend: {
             position: 'top'
