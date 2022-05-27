@@ -3,6 +3,7 @@ import Chart from "react-apexcharts";
 
 import LoadingIndicator from "../loading-indicator";
 import CryptoService from "../../services/crypto-service";
+import ConvertService from "../../services/convert-service";
 
 import './exchange-chart.sass'
 
@@ -14,9 +15,12 @@ const LineChart = ({ data }) => {
 
   const getChartConfig = () => {
     const series = [], yaxis = [], xaxis = [];
+    const convertService = new ConvertService();
     let id = 0;
 
     for (const [coinKey, coinData] of data.entries()) {
+      const maxPrice = Math.max.apply(Math, coinData.prices);
+
       series.push({
         name: coinData.label,
         data: coinData.prices
@@ -34,6 +38,9 @@ const LineChart = ({ data }) => {
           labels: {
             style: {
               colors: lineColors[coinKey]
+            },
+            formatter: function (value) {
+              return convertService.round(value)
             }
           },
           title: {
@@ -41,8 +48,9 @@ const LineChart = ({ data }) => {
             style: {
               color: "lineColors[coinKey]"
             }
-          }
-        });
+          },
+        max: maxPrice + 2000
+      });
 
       //нет смысла добавлять время для каждого коина. Оно везде одинаковое
       if (!id) {
@@ -105,11 +113,20 @@ class ExchangeChart extends Component {
   constructor(props) {
     super(props);
     this.cryptoService = new CryptoService(this.props.coinID);
+    this._fetchMarketsExchange();
+    this.updateDataIntervalID = setInterval(this._fetchMarketsExchange, 1000000000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.updateDataIntervalID);
+  }
+
+  _fetchMarketsExchange = () => {
     this.cryptoService.getMarketsExchange()
       .then((data) => {
         this.setState({
           data,
-        }, this._setupData);
+        });
       })
       .catch((err) => {
         console.log('Error:', err);
@@ -117,14 +134,14 @@ class ExchangeChart extends Component {
   }
 
   render() {
-    if (!this.state) return  <LoadingIndicator />
+    const content = !this.state ? <LoadingIndicator /> : <LineChart data={ this.state.data } />;
 
     return(
       <div className="exchange-chart">
         <h2 className="exchange-chart__title">{ this.props.title }</h2>
 
         <div className="exchange-chart__content">
-          <LineChart data={ this.state.data } />
+          { content }
         </div>
       </div>
     );
