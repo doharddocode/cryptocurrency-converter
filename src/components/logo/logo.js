@@ -1,10 +1,16 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 import './logo.sass'
 
 const Logo = () => {
   return (
-    <a href="/" className="logo"><h1 className="header__title">Личный кабинет</h1></a>
+    <NavLink
+      to="/"
+      className="logo"
+    >
+      <h1 className="header__title">Личный кабинет</h1>
+    </NavLink>
   );
 }
 

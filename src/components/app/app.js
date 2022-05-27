@@ -1,43 +1,50 @@
-import React, { Fragment } from 'react'
+import React from 'react'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from 'react-router-dom'
 
 import Header from "../header";
 import Nav from "../nav";
-import Converter from "../converter";
 import Footer from "../footer";
-import ExchangeChart from "../exchange-chart";
+import {
+  MainPage,
+  PortfolioPage
+} from '../../components/pages'
 
 import './app.sass'
 
-
 const App = () => {
   return (
-    <Fragment>
-      <div className="container d-flex flex-column min-vh-100">
-        <div className="wrapper flex-grow-1">
-          <Header />
-
-          <main className="main">
-            <div className="row">
-              <Converter title="Конвертер криптовалюты" />
-
-              <ExchangeChart
-                title="График изменения курса Bitcoin"
-                coinID="bitcoin"
-              />
-
-              <ExchangeChart
-                title="График изменения курса Ethereum"
-                coinID="ethereum"
-              />
-            </div>
-          </main>
-        </div>
-
+    <div className="container d-flex flex-column min-vh-100">
+      <div className="wrapper flex-grow-1">
+        <Header />
+        <Routes>
+          <Route
+            path="/"
+            element={<MainPage />}
+          />
+          <Route
+            path="/portfolio"
+            element={<PortfolioPage />}
+          />
+        </Routes>
         <Nav />
-       <Footer />
       </div>
-    </Fragment>
+      <Footer />
+    </div>
   );
 }
 
-export default App;
+const AppWrapper = () => {
+  return (
+    <div className="app" id="app">
+      <Router>
+        <App />
+      </Router>
+    </div>
+  )
+}
+
+export default AppWrapper;

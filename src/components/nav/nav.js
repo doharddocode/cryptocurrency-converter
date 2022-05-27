@@ -1,31 +1,46 @@
 import React from 'react'
+import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import { Offcanvas } from "react-bootstrap";
 
 import './nav.sass'
 
 const Nav = () => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+
   const menuObject = [
-    { label: 'Главная страница', link: '#' },
-    { label: 'Портфель', link: '#' },
+    { label: 'Главная страница', link: '/' },
+    { label: 'Портфель', link: 'portfolio' },
   ];
   const menu = !menuObject ? null : menuObject.map((menuItem, index) => {
     return(
-      <li key={ index } className="nav-item">
-        <a className="nav-link" href={ menuItem.link }>{ menuItem.label }</a>
+      <li key={ index } className="nav-item" onClick={ handleClose }>
+        <NavLink className="nav-link" to={ menuItem.link }>{ menuItem.label }</NavLink>
       </li>
     );
   });
 
-  return(
-    <div className="primary-menu offcanvas offcanvas-start" tabIndex="-1" id="offcanvasMenu"
-         aria-labelledby="offcanvasLabel">
-      <div className="offcanvas-header">
+  return (
+    <Offcanvas show={show} onHide={handleClose}>
+      <Offcanvas.Header closeButton>
         <h5 className="offcanvas-title" id="offcanvasLabel">Меню</h5>
-        <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
-      </div>
-
+      </Offcanvas.Header>
       <ul className="primary-menu__nav nav">{ menu }</ul>
-    </div>
+    </Offcanvas>
   );
+  //
+  // return(
+  //   <div className="primary-menu offcanvas offcanvas-start"
+  //        tabIndex="-1" id="offcanvasMenu"
+  //        aria-labelledby="offcanvasLabel">
+  //     <div className="offcanvas-header">
+  //
+  //     </div>
+  //
+  //
+  //   </div>
+  // );
 }
 
 export default Nav;

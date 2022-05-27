@@ -2,28 +2,9 @@ import React, { Component } from "react";
 
 import CryptoService from "../../services/crypto-service";
 import LoadingIndicator from "../loading-indicator";
+import Select from "../select";
 
 import './converter.sass'
-
-const CoinSelection = ({ data, dataTarget, onChange }) => {
-  if (!data) {
-    return null;
-  }
-
-  const items = Array.from(data, ([name, value]) => ({ name, value })).map((item, index) => {
-    return <option key={ index } value={ item.value.id }>{ item.value.label } ({ item.value.symbol })</option>;
-  })
-
-  return (
-    <select className="crypto-converter-form__select form-select"
-            aria-label="Select currency"
-            data-target={ dataTarget }
-            onChange={ onChange }
-    >
-      { items }
-    </select>
-  );
-}
 
 class Converter extends Component {
   constructor(props) {
@@ -153,7 +134,7 @@ class Converter extends Component {
 
           <div className="row align-items-center">
             <div className="col-md-5">
-              <CoinSelection
+              <Select
                 dataTarget="from"
                 onChange={ this._handleSelectChange }
                 data={ this.state.data }
@@ -165,7 +146,7 @@ class Converter extends Component {
             </div>
 
             <div className="col-md-5">
-              <CoinSelection
+              <Select
                 dataTarget="to"
                 onChange={ this._handleSelectChange }
                 data={ this.state.data }
