@@ -65,10 +65,10 @@ export default class CryptoService {
     return this._coinsDataTransform(data);
   }
 
-  _getMarketsData = async (coinId) => {
+  _getMarketsData = async (coinId, days) => {
     const params = {
       vs_currency: 'usd',
-      days: 14,
+      days,
       interval: 'daily',
     };
 
@@ -77,15 +77,20 @@ export default class CryptoService {
 
   _marketsDataTransform = (data) => {
     const result = new Map();
+    const coinLabels = {
+      bitcoin: 'Bitcoin',
+      ethereum: 'Ethereum'
+    }
 
     for (const [key, value] of data.entries()) {
-      const val = value.prices;
+      const prices = value.prices;
       const params = {
+        label: coinLabels[key],
         prices: [],
         timestamp: [],
       };
 
-      for (const price of val) {
+      for (const price of prices) {
         params.timestamp.push(price[0]);
         params.prices.push(price[1]);
         result.set(key, params);
@@ -95,12 +100,12 @@ export default class CryptoService {
     return result;
   }
 
-  getMarketsExchange = async () => {
+  getMarketsExchange = async (days = 14) => {
     const coinIds = this._coinIds.split(',');
     const result = new Map();
 
     for (const coinID of coinIds) {
-      result.set(coinID, await this._getMarketsData(coinID));
+      result.set(coinID, await this._getMarketsData(coinID, days));
     }
 
     return this._marketsDataTransform(result);

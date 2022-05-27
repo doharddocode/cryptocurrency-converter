@@ -1,7 +1,5 @@
 import React from 'react'
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
-import { Offcanvas } from "react-bootstrap";
 
 import './nav.sass'
 
@@ -13,9 +11,8 @@ const Nav = () => {
   const menu = !menuObject ? null : menuObject.map((menuItem, index) => {
     return(
       <li key={ index } className="nav-item">
-        <NavLink className="nav-link"
-                 to={ menuItem.link }
-                 activeClassName="active"
+        <NavLink to={ menuItem.link }
+                 className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
         >
           { menuItem.label }
         </NavLink>

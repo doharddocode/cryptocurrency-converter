@@ -10,13 +10,8 @@ const MainPage = () => {
       <Converter title="Конвертер криптовалюты" />
 
       <ExchangeChart
-        title="График изменения курса Bitcoin"
-        coinID="bitcoin"
-      />
-
-      <ExchangeChart
-        title="График изменения курса Ethereum"
-        coinID="ethereum"
+        title="График изменения курса валют"
+        coinID="bitcoin,ethereum"
       />
     </PageWrapper>
   )
