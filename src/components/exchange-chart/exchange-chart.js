@@ -40,7 +40,7 @@ const LineChart = ({ data }) => {
               colors: lineColors[coinKey]
             },
             formatter: function (value) {
-              return convertService.round(value)
+              return convertService.round(value, 0)
             }
           },
           title: {

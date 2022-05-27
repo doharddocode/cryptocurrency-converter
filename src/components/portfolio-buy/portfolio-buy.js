@@ -9,7 +9,6 @@ import Select from "../select";
 import './portfolio-buy.sass'
 
 const PortfolioBuy = () => {
-  const convertService = new ConvertService();
   const [selectData, updateSelectData] = useState();
   const [coinID, updateCoinID] = useState(null);
   const [amount, updateAmount] = useState(0);
@@ -37,7 +36,7 @@ const PortfolioBuy = () => {
           return {
             ...prevState,
             coinID: coinIDs[0],
-            data: data.get(coinID),
+            data: data.get(coinIDs[0]),
           }
         })
         updateSelectData(data);
@@ -50,6 +49,8 @@ const PortfolioBuy = () => {
 
   useEffect(() => {
     setPayload((prevState) => {
+      const convertService = new ConvertService();
+
       return {
         ...prevState,
         amount: convertService.round(Number(amount)),

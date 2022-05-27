@@ -9,8 +9,10 @@ import Header from "../header";
 import Footer from "../footer";
 import {
   MainPage,
-  PortfolioPage
+  PortfolioPage,
+  NotFoundPage
 } from '../../components/pages'
+import ErrorBoundry from "../error-boundry";
 
 import './app.sass'
 
@@ -20,6 +22,10 @@ const App = () => {
       <div className="wrapper flex-grow-1">
         <Header />
         <Routes>
+          <Route
+            path="*"
+            element={<NotFoundPage />}
+          />
           <Route
             path="/"
             element={<MainPage />}
@@ -39,7 +45,9 @@ const AppWrapper = () => {
   return (
     <div className="app" id="app">
       <Router>
-        <App />
+        <ErrorBoundry>
+          <App />
+        </ErrorBoundry>
       </Router>
     </div>
   )

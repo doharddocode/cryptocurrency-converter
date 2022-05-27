@@ -6,6 +6,60 @@ import Select from "../select";
 
 import './converter.sass'
 
+const ConvertForm = ({ data: formData, handleAmountChange, handleSelectChange }) => {
+  return (
+    <form className="crypto-converter-form">
+      <div className="row">
+        <div className="col-md-3">
+          <label htmlFor="amount" className="form-label">Количество</label>
+          <input type="number"
+                 className="form-control"
+                 id="amount" aria-describedby="amount" value={ formData.amount } min="0"
+                 onChange={ handleAmountChange }
+          />
+          <div id="amountHelp" className="form-text">Введите число</div>
+        </div>
+      </div>
+
+      <div className="row align-items-center">
+        <div className="col-md-5">
+          <Select
+            dataTarget="from"
+            onChange={ handleSelectChange }
+            data={ formData.data }
+          />
+        </div>
+
+        <div className="crypto-converter-form__exchange-icon col-md-2">
+          <i className="fa-solid fa-right-left"></i>
+        </div>
+
+        <div className="col-md-5">
+          <Select
+            dataTarget="to"
+            onChange={ handleSelectChange }
+            data={ formData.data }
+          />
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-md-6">
+          <div className="crypto-converter-form__result alert alert-secondary" role="alert">
+            <div className="result-text">{ formData.amount } { formData.coinFrom.label } ({ formData.coinFrom.symbol })</div>
+
+            <div className="del">=</div>
+
+            <div className="result-text">
+              <strong>{ formData.convertedResult }</strong> { formData.coinTo.label } ({ formData.coinTo.symbol })
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  );
+}
+
 class Converter extends Component {
   constructor(props) {
     super(props);
@@ -112,62 +166,18 @@ class Converter extends Component {
   render() {
     const title = this.props.title;
     const formData = this.state;
-
-    if (!formData) return <LoadingIndicator />;
+    const content = !formData
+      ? <LoadingIndicator />
+      : <ConvertForm
+          data={ formData }
+          handleAmountChange={ this._handleAmountChange }
+          handleSelectChange={ this._handleSelectChange }
+      />;
 
     return (
       <div className="crypto-converter">
         <h2 className="crypto-converter__title">{ title }</h2>
-
-        <form className="crypto-converter-form">
-          <div className="row">
-            <div className="col-md-3">
-              <label htmlFor="amount" className="form-label">Количество</label>
-              <input type="number"
-                     className="form-control"
-                     id="amount" aria-describedby="amount" value={ formData.amount } min="0"
-                     onChange={ this._handleAmountChange }
-              />
-              <div id="amountHelp" className="form-text">Введите число</div>
-            </div>
-          </div>
-
-          <div className="row align-items-center">
-            <div className="col-md-5">
-              <Select
-                dataTarget="from"
-                onChange={ this._handleSelectChange }
-                data={ this.state.data }
-              />
-            </div>
-
-            <div className="crypto-converter-form__exchange-icon col-md-2">
-              <i className="fa-solid fa-right-left"></i>
-            </div>
-
-            <div className="col-md-5">
-              <Select
-                dataTarget="to"
-                onChange={ this._handleSelectChange }
-                data={ this.state.data }
-              />
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-6">
-              <div className="crypto-converter-form__result alert alert-secondary" role="alert">
-                <div className="result-text">{ formData.amount } { formData.coinFrom.label } ({ formData.coinFrom.symbol })</div>
-
-                <div className="del">=</div>
-
-                <div className="result-text">
-                  <strong>{ formData.convertedResult }</strong> { formData.coinTo.label } ({ formData.coinTo.symbol })
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
+        { content }
       </div>
     );
   }

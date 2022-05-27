@@ -2,6 +2,10 @@ import React, { Component } from "react";
 
 import MainPage from "./main-page";
 import PortfolioPage from "./portfolio-page";
+import NotFoundPage from "./404-page";
+import ErrorPage from "./error-page";
+
+import './pages.sass'
 
 class PageWrapper extends Component {
   render() {
@@ -16,5 +20,7 @@ class PageWrapper extends Component {
 export {
   PageWrapper,
   MainPage,
-  PortfolioPage
+  PortfolioPage,
+  NotFoundPage,
+  ErrorPage,
 }
